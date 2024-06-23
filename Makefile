@@ -1,10 +1,16 @@
+
+VENV ?= env
+BIN_DIR ?= $(VENV)/bin
+HIDE ?= @
+UTILS ?= utils
+
 .PHONY: setup-venv setup clean-pyc clean-test test mypy lint docs check
 
 setup-venv:
-	python -m venv .venv && . .venv/bin/activate
-	pip install --upgrade pip
-	pip install -r requirements.dev
-	pip install -r requirements.prod
+	$(HIDE)python3.12 -m venv $(VENV)
+	$(HIDE)$(BIN_DIR)/pip3 install --upgrade pip
+	$(HIDE)$(BIN_DIR)/pip3 install -r requirements.dev
+	$(HIDE)$(BIN_DIR)/pip3 install -r requirements.prod
 
 setup:
 	 DOCKER_BUILDKIT=1 docker build -t dev -f Dockerfile .
@@ -24,21 +30,28 @@ clean: clean-pyc clean-test
 	find . -name '.my_cache' -exec rm -fr {} +
 	rm -rf logs/
 
-test: clean
-	. .venv/bin/activate && py.test tests --cov=src --cov-report=term-missing --cov-fail-under 95
+test-python: clean
+	. $(VENV)/bin/activate && py.test tests --cov=src --cov-report=term-missing --cov-fail-under 95
 
-mypy:
-	. .venv/bin/activate && mypy src
+test-pip:
+	$(HIDE)$(BIN_DIR)/pip3 check --disable-pip-version-check
+	$(HIDE)$(UTILS)/venv-pip-requirements-check.py $(BIN_DIR)/pip3
 
-lint:
-	. .venv/bin/activate && pylint src -j 4 --reports=y
+test-mypy:
+	. $(VENV)/bin/activate && mypy src
+
+test-lint:
+	. $(VENV)/bin/activate && pylint src -j 4 --reports=y
+
+test-flake8:
+	. $(VENV)/bin/activate && flake8 src
 
 docs: FORCE
-	cd docs; . .venv/bin/activate && sphinx-apidoc -o ./source ./src
-	cd docs; . .venv/bin/activate && sphinx-build -b html ./source ./build
+	cd docs; . $(VENV)/bin/activate && sphinx-apidoc -o ./source ./src
+	cd docs; . $(VENV)/bin/activate && sphinx-build -b html ./source ./build
 FORCE:
 
-checks: test lint mypy clean
+checks: test-pip test-flake8 test-line test-mypy test-python clean
 
 run-checks:
 	docker run --rm -it --name run-checks -v $(shell pwd):/opt -t dev make checks
