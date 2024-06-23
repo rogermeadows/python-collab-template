@@ -11,6 +11,7 @@ setup-venv:
 	$(HIDE)$(BIN_DIR)/pip3 install --upgrade pip
 	$(HIDE)$(BIN_DIR)/pip3 install -r requirements.dev
 	$(HIDE)$(BIN_DIR)/pip3 install -r requirements.prod
+	$(HIDE)$(BIN_DIR)/pip3 install --editable .
 
 setup:
 	 DOCKER_BUILDKIT=1 docker build -t dev -f Dockerfile .
