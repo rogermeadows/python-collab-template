@@ -17,6 +17,8 @@ jobs:
       with:
         python-version-file: ".python-version"
         cache: 'pip' # caching pip dependencies
+        cache-dependency-path: |
+          **/requirements*
         architecture: x64
     - run: make setup-venv
     - run: make checks
