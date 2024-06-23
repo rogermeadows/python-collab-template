@@ -52,7 +52,7 @@ docs: FORCE
 	cd docs; . $(VENV)/bin/activate && sphinx-build -b html ./source ./build
 FORCE:
 
-checks: test-pip test-flake8 test-line test-mypy test-python clean
+checks: test-pip test-flake8 test-lint test-mypy test-python clean
 
 run-checks:
 	docker run --rm -it --name run-checks -v $(shell pwd):/opt -t dev make checks
