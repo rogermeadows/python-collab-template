@@ -2,6 +2,7 @@
 .idea/
 .vscode/
 .venv/
+env/
 _build/
 notebooks/
 setup

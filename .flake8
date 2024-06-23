@@ -1,0 +1,5 @@
+[flake8]
+ignore = E252
+max-line-length = 120
+select = C,E,F,I1,W
+import-order-style = smarkets
