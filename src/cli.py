@@ -32,5 +32,9 @@ def cmd2(
     print(opt2)
 
 
-if __name__ == '__main__':  # pragma: no cover
+def main() -> None:
     app()
+
+
+if __name__ == '__main__':  # pragma: no cover
+    main()

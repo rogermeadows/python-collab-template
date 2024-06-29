@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "python-collab-template"
+version = "0.1.0"
+description = "Sample Python Project"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{ include = "src" }]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+typer = "^0.12.3"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+codecov = "^2.1.13"
+flake8 = "^7.1.0"
+flake8-import-order = "^0.18.2"
+mock = "^5.1.0"
+mypy = "^1.10.1"
+pylint = "^3.2.5"
+pytest = "^8.2.2"
+pytest-cov = "^5.0.0"
+sphinx = "^7.3.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+cli = "src.cli:main"
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+

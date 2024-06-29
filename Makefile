@@ -32,7 +32,7 @@ clean: clean-pyc clean-test
 	rm -rf logs/
 
 test-python: clean
-	. $(VENV)/bin/activate && py.test tests --cov=src --cov-report=term-missing --cov-fail-under 95
+	. $(VENV)/bin/activate && pytest tests --cov=src --cov-report=term-missing --cov-fail-under 95
 
 test-pip:
 	$(HIDE)$(BIN_DIR)/pip3 check --disable-pip-version-check
