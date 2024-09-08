@@ -7,7 +7,7 @@ UTILS ?= utils
 .PHONY: setup-venv setup clean-pyc clean-test test mypy lint docs check
 
 setup-venv:
-	$(HIDE)python3.12 -m venv $(VENV)
+	$(HIDE)python -m venv $(VENV)
 	$(HIDE)$(BIN_DIR)/pip3 install --upgrade pip
 	$(HIDE)$(BIN_DIR)/pip3 install -r requirements.dev
 	$(HIDE)$(BIN_DIR)/pip3 install -r requirements.prod
