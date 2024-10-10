@@ -1,5 +1,18 @@
+# test_cli.py
+from typer.testing import CliRunner
+from src.cli import app
 
-# Do nothing...  This is just to satisfy py.test, which is being told to look for tests
-# in this directory.  I like tests in a "tests" directory under the actual source code,
-# not off on the side.
-pass
+
+runner = CliRunner()
+
+
+def test_cmd1():
+    result = runner.invoke(app, ["cmd1", "world"])
+    assert result.exit_code == 0
+    assert "hello, world.\n" in result.output
+
+
+def test_cmd2_with_option():
+    result = runner.invoke(app, ["cmd2", "--opt2", "42"])
+    assert result.exit_code == 0
+    assert "42" in result.output
