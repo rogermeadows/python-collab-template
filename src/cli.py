@@ -22,6 +22,7 @@ def cmd1(
     ctx: typer.Context,
     arg1: Annotated[str, typer.Argument(help='a required argument')]
 ) -> None:
+    # This command takes a required string argument and prints it.
     print(f'{ctx.obj["greeting"]}, {arg1}.')
 
 
@@ -29,10 +30,12 @@ def cmd1(
 def cmd2(
     opt2: Annotated[Optional[int], typer.Option(help='a required option')] = None
 ) -> None:
+    # This command takes an optional integer option and prints it.
+    # If the option is not provided, it defaults to None.
     print(opt2)
 
 
-def main() -> None:
+def main() -> None:  # pragma: no cover
     app()
 
 
