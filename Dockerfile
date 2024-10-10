@@ -1,13 +1,13 @@
-ARG BASE_IMAGE=python:3.8
+ARG BASE_IMAGE=python:3.12
 
-FROM ${BASE_IMAGE} as base
+FROM ${BASE_IMAGE} AS base
 
 LABEL maintainer='eugeneyan <eugeneyan@eugeneyan.com>'
 
 # Use the opt directory as our dev directory
 WORKDIR /opt
 
-ENV PYTHONUNBUFFERED TRUE
+ENV PYTHONUNBUFFERED=TRUE
 
 COPY requirements.dev .
 COPY requirements.prod .

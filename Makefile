@@ -32,20 +32,20 @@ clean: clean-pyc clean-test
 	rm -rf logs/
 
 test-python: clean
-	. $(VENV)/bin/activate && pytest tests --cov=src --cov-report=term-missing --cov-fail-under 95
+	pytest tests --cov=src --cov-report=term-missing --cov-fail-under 95
 
 test-pip:
 	$(HIDE)$(BIN_DIR)/pip3 check --disable-pip-version-check
 	$(HIDE)$(UTILS)/venv-pip-requirements-check.py $(BIN_DIR)/pip3
 
 test-mypy:
-	. $(VENV)/bin/activate && mypy src
+	mypy src
 
 test-lint:
-	. $(VENV)/bin/activate && pylint src -j 4 --reports=y
+	pylint src -j 4 --reports=y
 
 test-flake8:
-	. $(VENV)/bin/activate && flake8 src
+	flake8 src
 
 docs: FORCE
 	cd docs; . $(VENV)/bin/activate && sphinx-apidoc -o ./source ./src
@@ -55,7 +55,7 @@ FORCE:
 checks: test-pip test-flake8 test-lint test-mypy test-python clean
 
 run-checks:
-	docker run --rm -it --name run-checks -v $(shell pwd):/opt -t dev make checks
+	docker run --rm -it --name run-checks -v $(shell pwd):/opt -t dev -e BIN_DIR=/usr/local/bin make checks
 
 bash:
 	docker run --rm -it --name run-checks -v $(shell pwd):/opt -t dev bash
